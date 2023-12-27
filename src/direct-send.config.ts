@@ -2,7 +2,13 @@ export const EMAIL_CONSTANTS = {
   URL: 'https://directsend.co.kr/index.php/api_v2/mail_change_word',
 };
 
-export interface DirectSendModuleOptions {
+export interface RESPONSE_TYPE {
+  message: string;
+  statusCode: number;
+  data: any;
+}
+
+export interface DIRECT_SEND_MODULE_OPTIONS {
   /**
    * 다이렉트센드 발급 ID (로그인 ID)
    */

@@ -1,7 +1,12 @@
 export declare const EMAIL_CONSTANTS: {
     URL: string;
 };
-export interface DirectSendModuleOptions {
+export interface RESPONSE_TYPE {
+    message: string;
+    statusCode: number;
+    data: any;
+}
+export interface DIRECT_SEND_MODULE_OPTIONS {
     username: string;
     key: string;
 }

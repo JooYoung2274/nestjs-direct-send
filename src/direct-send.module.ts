@@ -1,10 +1,10 @@
 import { Module, DynamicModule } from '@nestjs/common';
 import { DirectSendService } from './direct-send.service';
-import { DirectSendModuleOptions } from './direct-send.config';
+import { DIRECT_SEND_MODULE_OPTIONS } from './direct-send.config';
 
 @Module({})
 export class DirectSendModule {
-  static register(options: DirectSendModuleOptions): DynamicModule {
+  static register(options: DIRECT_SEND_MODULE_OPTIONS): DynamicModule {
     return {
       module: DirectSendModule,
       providers: [

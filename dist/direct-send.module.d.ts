@@ -1,5 +1,5 @@
 import { DynamicModule } from '@nestjs/common';
-import { DirectSendModuleOptions } from './direct-send.config';
+import { DIRECT_SEND_MODULE_OPTIONS } from './direct-send.config';
 export declare class DirectSendModule {
-    static register(options: DirectSendModuleOptions): DynamicModule;
+    static register(options: DIRECT_SEND_MODULE_OPTIONS): DynamicModule;
 }

@@ -48,11 +48,7 @@ import { DirectSendService } from 'nestjs-direct-send';
 @Injectable()
 export class AppService {
   constructor(private readonly directSendService: DirectSendService) {}
-  async sendEmail(data: SEND_EMAIL_PARAMS): Promise<{
-    message: string;
-    statusCode: number;
-    data: any;
-  }> {
+  async sendEmail(data: SEND_EMAIL_PARAMS): Promise<RESPONSE_TYPE> {
     const response = await this.directSendService.sendEmail(data);
     return response;
   }
@@ -64,14 +60,10 @@ export class AppService {
 ### 1-3. sendEmail(data: SEND_EMAIL_PARAMS)
 
 ```typescript
-sendEmail(data: SEND_EMAIL_PARAMS): Promise<{
-    message: string; // 'success OR fail'
-    statusCode: number; // 200 OR 400
-    data: any; // '0' OR '개별 에러 메세지'
-}>
+sendEmail(data: SEND_EMAIL_PARAMS): Promise<RESPONSE_TYPE>
 ```
 
-### 1-4. SEND_EMAIL_PARAMS
+### 1-4. SEND_EMAIL_PARAMS, RESPONSE_TYPE
 
 ```typescript
 interface SEND_EMAIL_PARAMS {
@@ -80,6 +72,12 @@ interface SEND_EMAIL_PARAMS {
   body?: string; // 메일 내용 (html)
   sender?: string; // 메일 발신자 이메일
   sender_name?: string; // 메일 발신자 이름
+}
+
+interface RESPONSE_TYPE {
+  message: string; // 'success OR fail'
+  statusCode: number; // 200 OR 400
+  data: any; // '0' OR '개별 에러 메세지'
 }
 ```
 
