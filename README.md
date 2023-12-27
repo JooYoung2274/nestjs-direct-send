@@ -1,4 +1,4 @@
-# Direct_Send Email
+# nestjs-direct-send
 
 - 다이렉트 샌드 이메일 발송 관련 nestjs 라이브러리 입니다.
 - 개인적으로 사용하려고 모듈화 한 것이기 때문에 다이렉트샌드 api에 대한 자세한 내용은 아래 링크에서 확인 가능합니다<br>
@@ -11,9 +11,9 @@ npm install nestjs-direct-send
 
 <br>
 
-## 사용 예시 (여러 모듈에서 사용해야 하면 Direct-send.module.ts로 따로 빼서 주입)
+## 1. 사용 예시 (여러 모듈에서 사용해야 하면 Direct-send.module.ts로 따로 빼서 주입)
 
-### module.ts
+### 1-1. module.ts
 
 ```typescript
 import { Module } from '@nestjs/common'가
@@ -35,7 +35,7 @@ import { DirectSendModule } from 'nestjs-direct-send';
 export class AppModule {}
 ```
 
-### service.ts
+### 1-2. service.ts
 
 ```typescript
 // 사용할 Service에 주입 후 사용
@@ -53,7 +53,19 @@ export class AppService {
 }
 ```
 
-### INPUT_DATA 타입 (SEND_EMAIL_PARAMS)
+<br>
+
+### 1-3. sendEmail(data: SEND_EMAIL_PARAMS)
+
+```typescript
+sendEmail(data: SEND_EMAIL_PARAMS): Promise<{
+    message: string;
+    statusCode: number;
+    data: any;
+}>
+```
+
+### 1-4. INPUT_DATA 타입 (SEND_EMAIL_PARAMS)
 
 ```typescript
 interface SEND_EMAIL_PARAMS {
@@ -67,7 +79,7 @@ interface SEND_EMAIL_PARAMS {
 
 <br>
 
-## API 리턴 타입
+### 1-5. API 리턴 타입
 
 ```typescript
 // 성공 시
