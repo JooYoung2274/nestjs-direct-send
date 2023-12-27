@@ -13,7 +13,7 @@ export class DirectSendService {
 
   /**
    * @param data : SEND_EMAIL_PARAMS
-   * @returns { message: 'success' | 'fail', statusCode: 200 | 400, data: string }
+   * @returns : { message: 'success' | 'fail', statusCode: 200 | 400, data: string }
    * @description : 메일 발송 함수
    */
   async sendEmail(data: SEND_EMAIL_PARAMS) {

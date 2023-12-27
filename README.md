@@ -1,17 +1,19 @@
 # nestjs-direct-send
 
 - 다이렉트 샌드 이메일 발송 관련 nestjs 라이브러리 입니다.
-- 개인적으로 사용하려고 모듈화 한 것이기 때문에 다이렉트샌드 api에 대한 자세한 내용은 아래 링크에서 확인 가능합니다<br>
+- 개인적으로 사용하려고 모듈화 한 것이기 때문에 다이렉트샌드 api에 대한 자세한 내용은 아래 링크에서 확인 가능합니다.<br>
   https://directsend.co.kr/index.php/customer/manual
+  <br>
 
-```
-// INSTALL
-npm install nestjs-direct-send
+### INSTALL
+
+```bash
+$ npm install nestjs-direct-send
 ```
 
 <br>
 
-## 1. 사용 예시 (여러 모듈에서 사용해야 하면 Direct-send.module.ts로 따로 빼서 주입)
+## 1. EXAMPLE
 
 ### 1-1. module.ts
 
@@ -46,7 +48,11 @@ import { DirectSendService } from 'nestjs-direct-send';
 @Injectable()
 export class AppService {
   constructor(private readonly directSendService: DirectSendService) {}
-  async sendEmail(data: SEND_EMAIL_PARAMS) {
+  async sendEmail(data: SEND_EMAIL_PARAMS): Promise<{
+    message: string;
+    statusCode: number;
+    data: any;
+  }> {
     const response = await this.directSendService.sendEmail(data);
     return response;
   }
@@ -59,21 +65,21 @@ export class AppService {
 
 ```typescript
 sendEmail(data: SEND_EMAIL_PARAMS): Promise<{
-    message: string;
-    statusCode: number;
-    data: any;
+    message: string; // 'success OR fail'
+    statusCode: number; // 200 OR 400
+    data: any; // '0' OR '개별 에러 메세지'
 }>
 ```
 
-### 1-4. INPUT_DATA 타입 (SEND_EMAIL_PARAMS)
+### 1-4. SEND_EMAIL_PARAMS
 
 ```typescript
 interface SEND_EMAIL_PARAMS {
-  subject: string;
-  receiver: { email: string; name?: string; mobile?: string; note1?: string; note2?: string }[];
-  body?: string;
-  sender?: string;
-  sender_name?: string;
+  subject: string; // 메일 제목
+  receiver: { email: string; name?: string; mobile?: string; note1?: string; note2?: string }[]; // 메일 수신자 리스트
+  body?: string; // 메일 내용 (html)
+  sender?: string; // 메일 발신자 이메일
+  sender_name?: string; // 메일 발신자 이름
 }
 ```
 

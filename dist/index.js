@@ -16,4 +16,5 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
 Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(require("./direct-send.module"), exports);
 __exportStar(require("./direct-send.service"), exports);
+__exportStar(require("./direct-send.config"), exports);
 //# sourceMappingURL=index.js.map

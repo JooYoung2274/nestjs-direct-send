@@ -1,10 +1,10 @@
+export declare const EMAIL_CONSTANTS: {
+    URL: string;
+};
 export interface DirectSendModuleOptions {
     username: string;
     key: string;
 }
-export declare const EMAIL_CONSTANTS: {
-    URL: string;
-};
 export interface SEND_EMAIL_PARAMS {
     subject: string;
     sender: string;
