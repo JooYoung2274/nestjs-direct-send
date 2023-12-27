@@ -22,7 +22,7 @@ let DirectSendService = class DirectSendService {
         data['username'] = this.username;
         data['key'] = this.key;
         try {
-            const res = await axios_1.default.post(direct_send_config_1.EMAIL_CONSTANTS.URL, data, {
+            const res = await axios_1.default.post(direct_send_config_1.EMAIL_CONSTANTS.SEND_EMAIL_URL, data, {
                 headers: {
                     'Cache-Control': 'no-cache',
                     'Content-Type': 'application/json;charset=utf-8',
@@ -37,6 +37,36 @@ let DirectSendService = class DirectSendService {
         catch (error) {
             throw new common_1.BadRequestException(error.message);
         }
+    }
+    async getRemainingMoney() {
+        const body = {
+            username: this.username,
+            key: this.key,
+        };
+        const { status, data, statusText } = await axios_1.default.post(direct_send_config_1.EMAIL_CONSTANTS.GET_REMAINING_MONEY_URL, body, {
+            headers: {
+                'Cache-Control': 'no-cache',
+                'Content-Type': 'application/json;charset=utf-8',
+            },
+        });
+        if (status === 200) {
+            const point = Number(data.point.split('.')[0].replace(/,/g, ''));
+            return point;
+        }
+        else {
+            console.log('DirectSendClient::getRemainingMoney', { data, status, statusText });
+            return 99999;
+        }
+    }
+    async sendSMS(data) {
+        data['username'] = this.username;
+        data['key'] = this.key;
+        const res = await axios_1.default.post(direct_send_config_1.EMAIL_CONSTANTS.SEND_SMS_URL, data);
+        console.log(res);
+        if (res?.data?.status !== '0') {
+            return { message: 'fail', statusCode: 400, data: res?.data?.msg };
+        }
+        return { message: 'success', statusCode: 200, data: res?.data?.status };
     }
 };
 DirectSendService = __decorate([

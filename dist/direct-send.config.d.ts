@@ -1,19 +1,21 @@
 export declare const EMAIL_CONSTANTS: {
-    URL: string;
+    SEND_EMAIL_URL: string;
+    SEND_SMS_URL: string;
+    GET_REMAINING_MONEY_URL: string;
 };
-export interface RESPONSE_TYPE {
+export type RESPONSE_TYPE = {
     message: string;
     statusCode: number;
     data: any;
-}
-export interface DIRECT_SEND_MODULE_OPTIONS {
+};
+export type DIRECT_SEND_MODULE_OPTIONS = {
     username: string;
     key: string;
-}
-export interface SEND_EMAIL_PARAMS {
+};
+export type SEND_EMAIL_PARAMS = {
     subject: string;
     sender: string;
-    sender_name: string;
+    sender_name?: string;
     receiver: {
         email: string;
         name?: string;
@@ -21,5 +23,17 @@ export interface SEND_EMAIL_PARAMS {
         note1?: string;
         note2?: string;
     }[];
-    body?: string;
-}
+    body: string;
+};
+export type DIRECT_SEND_SMS_REQUEST_TYPE = {
+    title?: string;
+    message: string;
+    sender: string;
+    receiver: {
+        mobile: string;
+        name?: string;
+        note1?: string;
+        note2?: string;
+    }[];
+    sms_type: string;
+};

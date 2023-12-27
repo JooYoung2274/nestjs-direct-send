@@ -1,7 +1,9 @@
 # nestjs-direct-send
 
-- 다이렉트 샌드 이메일 발송 관련 nestjs 라이브러리 입니다.
-- 개인적으로 사용하려고 모듈화 한 것이기 때문에 다이렉트샌드 api에 대한 자세한 내용은 아래 링크에서 확인 가능합니다.<br>
+- 다이렉트 샌드 이메일/문자 발송, 잔액 조회 기능을 모듈화한 nestjs 라이브러리 입니다.
+- 개인적으로 사용하려고 모듈화 한 것이기 때문에 빠져있는 기능들이 많습니다.
+- 다이렉트샌드 api에 대한 자세한 내용은 아래 링크에서 확인 가능합니다.
+  <br>
   https://directsend.co.kr/index.php/customer/manual
   <br>
 
@@ -18,7 +20,7 @@ $ npm install nestjs-direct-send
 ### 1-1. module.ts
 
 ```typescript
-import { Module } from '@nestjs/common'가
+import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { DirectSendModule } from 'nestjs-direct-send';
@@ -52,33 +54,55 @@ export class AppService {
     const response = await this.directSendService.sendEmail(data);
     return response;
   }
+
+  async sendSMS(data: DIRECT_SEND_SMS_REQUEST_TYPE): Promise<RESPONSE_TYPE> {
+    const response = await this.directSendService.sendSMS(data);
+    return response;
+  }
+
+  async getRemainingMoney(): Promise<number> {
+    const response = await this.directSendService.getRemainingMoney();
+    return response;
+  }
 }
 ```
 
 <br>
 
-### 1-3. sendEmail(data: SEND_EMAIL_PARAMS)
+### 1-3. METHOD
 
 ```typescript
 sendEmail(data: SEND_EMAIL_PARAMS): Promise<RESPONSE_TYPE>
+
+sendSMS(data: DIRECT_SEND_SMS_REQUEST_TYPE): Promise<RESPONSE_TYPE>
+
+getRemainingMoney(): Promise<number>
 ```
 
-### 1-4. SEND_EMAIL_PARAMS, RESPONSE_TYPE
+### 1-4. SEND_EMAIL_PARAMS, DIRECT_SEND_SMS_REQUEST_TYPE, RESPONSE_TYPE
 
 ```typescript
-interface SEND_EMAIL_PARAMS {
+type SEND_EMAIL_PARAMS = {
   subject: string; // 메일 제목
   receiver: { email: string; name?: string; mobile?: string; note1?: string; note2?: string }[]; // 메일 수신자 리스트
-  body?: string; // 메일 내용 (html)
-  sender?: string; // 메일 발신자 이메일
+  body: string; // 메일 내용 (html)
+  sender: string; // 메일 발신자 이메일
   sender_name?: string; // 메일 발신자 이름
-}
+};
 
-interface RESPONSE_TYPE {
+type DIRECT_SEND_SMS_REQUEST_TYPE = {
+  title?: string; // 문자 제목
+  message: string; // 문자 내용
+  sender: string; // 문자 발송자 번호
+  receiver: { mobile: string; name?: string; note1?: string; note2?: string }[]; // 문자 수신자 리스트
+  sms_type: string; // 발송 타입 (현재 NORMAL만 구현)
+};
+
+type RESPONSE_TYPE = {
   message: string; // 'success OR fail'
   statusCode: number; // 200 OR 400
   data: any; // '0' OR '개별 에러 메세지'
-}
+};
 ```
 
 <br>

@@ -1,6 +1,6 @@
 {
   "name": "nestjs-direct-send",
-  "version": "0.0.14",
+  "version": "0.0.17",
   "description": "다이렉트 샌드 메일 발송 nestjs 라이브러리 입니다",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

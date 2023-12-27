@@ -1,1 +1,1 @@
-{"version":3,"file":"direct-send.config.js","sourceRoot":"","sources":["../src/direct-send.config.ts"],"names":[],"mappings":";;;AAAa,QAAA,eAAe,GAAG;IAC7B,GAAG,EAAE,4DAA4D;CAClE,CAAC"}
+{"version":3,"file":"direct-send.config.js","sourceRoot":"","sources":["../src/direct-send.config.ts"],"names":[],"mappings":";;;AAAa,QAAA,eAAe,GAAG;IAC7B,cAAc,EAAE,4DAA4D;IAC5E,YAAY,EAAE,2DAA2D;IACzE,uBAAuB,EAAE,2DAA2D;CACrF,CAAC"}
