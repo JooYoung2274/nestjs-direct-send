@@ -22,7 +22,7 @@ export class DirectSendService {
    * @returns : { message: 'success' | 'fail', statusCode: 200 | 400, data: string }
    * @description : 메일 발송 함수
    */
-  async sendEmail(data: SEND_EMAIL_PARAMS): Promise<RESPONSE_TYPE> {
+  async sendEmail(data: SEND_EMAIL_PARAMS): Promise<RESPONSE_TYPE<string>> {
     data['username'] = this.username;
     data['key'] = this.key;
 
@@ -45,27 +45,32 @@ export class DirectSendService {
   }
 
   /**
-   * @returns : number
+   * @returns :  { message: 'success' | 'fail', statusCode: 200 | 400, data: number | string }
    * @description : 잔액 조회 함수
    */
-  async getRemainingMoney(): Promise<number> {
+  async getRemainingMoney(): Promise<RESPONSE_TYPE<number | string>> {
     const body = {
       username: this.username,
       key: this.key,
     };
-    const { status, data, statusText } = await axios.post(EMAIL_CONSTANTS.GET_REMAINING_MONEY_URL, body, {
-      headers: {
-        'Cache-Control': 'no-cache',
-        'Content-Type': 'application/json;charset=utf-8',
-      },
-    });
+    try {
+      const res = await axios.post(EMAIL_CONSTANTS.GET_REMAINING_MONEY_URL, body, {
+        headers: {
+          'Cache-Control': 'no-cache',
+          'Content-Type': 'application/json;charset=utf-8',
+        },
+      });
 
-    if (status === 200) {
-      const point = Number(data.point.split('.')[0].replace(/,/g, ''));
-      return point;
-    } else {
-      console.log('DirectSendClient::getRemainingMoney', { data, status, statusText });
-      return 99999;
+      if (res?.data?.status) {
+        return {
+          message: 'fail',
+          statusCode: 400,
+          data: res?.data?.status === '100' ? '필수데이터가 없습니다.' : 'username - key 가 맞지 않습니다.',
+        };
+      }
+      return { message: 'success', statusCode: 200, data: Number(res?.data?.point.split('.')[0].replace(/,/g, '')) };
+    } catch (error) {
+      throw new BadRequestException(error.message);
     }
   }
 
@@ -73,15 +78,18 @@ export class DirectSendService {
    * @param data : DIRECT_SEND_SMS_REQUEST_TYPE
    * @returns : { message: 'success' | 'fail', statusCode: 200 | 400, data: string }
    */
-  async sendSMS(data: DIRECT_SEND_SMS_REQUEST_TYPE): Promise<RESPONSE_TYPE> {
+  async sendSMS(data: DIRECT_SEND_SMS_REQUEST_TYPE): Promise<RESPONSE_TYPE<string>> {
     data['username'] = this.username;
     data['key'] = this.key;
+    try {
+      const res = await axios.post(EMAIL_CONSTANTS.SEND_SMS_URL, data);
 
-    const res = await axios.post(EMAIL_CONSTANTS.SEND_SMS_URL, data);
-    console.log(res);
-    if (res?.data?.status !== '0') {
-      return { message: 'fail', statusCode: 400, data: res?.data?.msg };
+      if (res?.data?.status !== '0') {
+        return { message: 'fail', statusCode: 400, data: res?.data?.msg };
+      }
+      return { message: 'success', statusCode: 200, data: res?.data?.status };
+    } catch (error) {
+      throw new BadRequestException(error.message);
     }
-    return { message: 'success', statusCode: 200, data: res?.data?.status };
   }
 }

@@ -3,10 +3,10 @@ export declare const EMAIL_CONSTANTS: {
     SEND_SMS_URL: string;
     GET_REMAINING_MONEY_URL: string;
 };
-export type RESPONSE_TYPE = {
+export type RESPONSE_TYPE<T> = {
     message: string;
     statusCode: number;
-    data: any;
+    data: T;
 };
 export type DIRECT_SEND_MODULE_OPTIONS = {
     username: string;

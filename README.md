@@ -72,11 +72,11 @@ export class AppService {
 ### 1-3. METHOD
 
 ```typescript
-sendEmail(data: SEND_EMAIL_PARAMS): Promise<RESPONSE_TYPE>
+sendEmail(data: SEND_EMAIL_PARAMS): Promise<RESPONSE_TYPE<string>>
 
-sendSMS(data: DIRECT_SEND_SMS_REQUEST_TYPE): Promise<RESPONSE_TYPE>
+sendSMS(data: DIRECT_SEND_SMS_REQUEST_TYPE): Promise<RESPONSE_TYPE<string>>
 
-getRemainingMoney(): Promise<number>
+getRemainingMoney(): Promise<RESPONSE_TYPE<number | string>>
 ```
 
 ### 1-4. SEND_EMAIL_PARAMS, DIRECT_SEND_SMS_REQUEST_TYPE, RESPONSE_TYPE
@@ -98,10 +98,10 @@ type DIRECT_SEND_SMS_REQUEST_TYPE = {
   sms_type: string; // 발송 타입 (현재 NORMAL만 구현)
 };
 
-type RESPONSE_TYPE = {
+type RESPONSE_TYPE<T> = {
   message: string; // 'success OR fail'
   statusCode: number; // 200 OR 400
-  data: any; // '0' OR '개별 에러 메세지'
+  data: T; // <T>
 };
 ```
 

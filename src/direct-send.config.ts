@@ -4,10 +4,10 @@ export const EMAIL_CONSTANTS = {
   GET_REMAINING_MONEY_URL: 'https://directsend.co.kr/index.php/api_v2/remaining_money',
 };
 
-export type RESPONSE_TYPE = {
+export type RESPONSE_TYPE<T> = {
   message: string;
   statusCode: number;
-  data: any;
+  data: T;
 };
 
 export type DIRECT_SEND_MODULE_OPTIONS = {
